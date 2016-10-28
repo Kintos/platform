@@ -13,3 +13,15 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired("Ingresa tu correo"), Email("Ingresa tu correo correcto")])
     password = PasswordField("Password", validators=[DataRequired("Ingresa la contraseña")])
     submit = SubmitField("Sign in")
+
+class InvestForm(FlaskForm):
+    amount = StringField('Amount')
+    duration = StringField('Duration')
+    total = StringField('Total')
+    submit = SubmitField('Request')
+    
+class LoanForm(FlaskForm):
+    amount = StringField('Amount')
+    duration = StringField('Duration')
+    total = StringField('Total')
+    submit = SubmitField('Request')

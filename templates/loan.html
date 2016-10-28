@@ -18,7 +18,7 @@
         
         <div class="caja">
             
-            <form class="form-horizontal form-pricing" role="form">
+            <form class="form-horizontal form-pricing" role="form" method="POST" action="/loan">
                 
                 <div class="caja-slider">
                     <h4 class="grande">Cantidad</h4>
@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label for="cantidad" class="col-sm-6 control-label">Cantidad ($): </label>
                         <div class="col-sm-6">
-                            <input type="hidden" id="cantidad" class="form-control">
+                            <input type="hidden" id="cantidad" name="amount" class="form-control">
                             <p class="precio lead" id="cantidad-label"></p>
                             <span class="precio">.00</span>
                         </div>
@@ -49,7 +49,7 @@
                     <div class="form-group">
                       <label for="duracion" class="col-sm-6 control-label">Duración: </label>
                         <div class="col-sm-6">
-                            <input type="hidden" id="duracion" class="form-control">
+                            <input type="hidden" id="duracion" name="duration" class="form-control">
                             <p class="precio lead" id="duracion-label"></p>
                             <span class="precio">Semanas</span>
                         </div>
@@ -59,7 +59,7 @@
                     <div class="form-group total">
                         <label for="total" class="col-sm-6 control-label"><strong>Total Semanal: </strong></label>
                         <div class="col-sm-6">
-                            <input type="hidden" id="total" class="form-control">
+                            <input type="hidden" id="total" name="total" class="form-control">
                             <p class="precio lead" id="total-label"></p>
                         </div>
                     </div>
@@ -79,5 +79,4 @@
     
 </div>
 <script src="{{ url_for('static', filename='js/actions_prestamo.js') }}"></script>
-<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 {% endblock %}

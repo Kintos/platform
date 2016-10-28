@@ -1578,6 +1578,7 @@ form label {
 
 .fh5co-loader {
   position: fixed;
+  display: inline-block;
   left: 0px;
   top: 0px;
   width: 100%;
