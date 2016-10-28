@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Kintos</title>
+
+    <link href="https://bootswatch.com/flatly/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='css/styles_login.css') }}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+    <div class="form">
+
+      <ul class="tab-group">
+        <li class="tab active"><a href='{{url_for("login")}}'>Entrar</a></li>
+        <li class="tab"><a href='{{url_for("signup")}}'>Registrar</a></li>
+
+      </ul>
+
+      <div class="tab-content">
+
+        <div id="login">
+          <h1>Entrar</h1>
+          
+          <form method="POST" action="/login">
+              <!--{{ form.hidden_tag() }}-->
+            
+            <div class="form-group">
+              {{ form.email.label }}
+              {{ form.email }}
+            </div>
+            
+            <div class="form-group">
+              {{ form.password.label }}
+              {{ form.password }}
+            </div>
+            
+            {{ form.submit(class="button button-block") }}
+          </form>
+      </div>
+        
+        <!--
+        <div id="signup">
+          <h1>Registrate gratis</h1>
+
+          <form action="/" method="post">
+
+          <div class="top-row">
+            <div class="field-wrap">
+              <label>
+                Nombre<span class="req">*</span>
+              </label>
+              <input type="text" required autocomplete="off" />
+            </div>
+
+            <div class="field-wrap">
+              <label>
+                Apellido<span class="req">*</span>
+              </label>
+              <input type="text"required autocomplete="off"/>
+            </div>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+              Correo Electronico<span class="req">*</span>
+            </label>
+            <input type="email"required autocomplete="off"/>
+          </div>
+
+          <div class="field-wrap">
+            <label>
+            Contraseña<span class="req">*</span>
+            </label>
+            <input type="password"required autocomplete="off"/>
+          </div>
+
+          <button type="submit" class="button button-block"/>Registrate</button>
+
+          </form>
+
+        </div>-->
+
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/actions_login.js') }}"></script>
+</body>
+
+</html>
