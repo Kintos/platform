@@ -104,8 +104,13 @@ def loan():
         duration = request.form.get('duration')
         total = request.form.get('total')
         data = {'amount':amount, 'duration': duration, 'total':total }
-        db.child("/invests/"+email).push(data)
-        return render_template("loan.html", form = form)
+        data = json.dumps(data, ensure_ascii=False)
+        db.child("invests").child(email).push(data)
+    elif request.method == "GET":
+        if "email" in session :
+            return render_template('loan.html', form = form)
+        else :
+            return redirect(url_for("index"))
 
 
 @app.route("/support")
