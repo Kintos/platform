@@ -3,6 +3,7 @@ from forms import SignupForm, LoginForm
 
 import os
 import pyrebase
+import json
 #import openpay
 
 config = {
@@ -30,13 +31,19 @@ def login():
     form = LoginForm()
     if request.method == "POST":
         if form.validate() == False:
-            return render_template("login.html", form = form)
+            return render_template("login.html", form=form)
         else:
             email = form.email.data
             password = form.password.data
             
             user = auth.sign_in_with_email_and_password(email, password)
-            print(user)
+            if user["errors"] :
+                return "Error"
+            else :
+                userIdToken = user['idToken']
+                return userIdToken
+            
+            #return redirect(url_for("home"))
             
     elif request.method == "GET":
         return render_template("login.html", form = form)
@@ -51,6 +58,7 @@ def signup():
             return render_template('signup.html', form = form)
         else :
             auth.create_user_with_email_and_password(form.email.data, form.password.data)
+            auth.send_password_reset_email(form.email.data)
             session["email"] = form.email.data
             return redirect(url_for("home"))
     

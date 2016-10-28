@@ -9,7 +9,7 @@ class SignupForm(FlaskForm):
     password = PasswordField('Password', validators = [DataRequired("Ingresa la contraseña"), Length(min=6, message="La contraseña tiene que ser de mínimo 6 caracteres")])
     submit = SubmitField('Sign up')
     
-class LoginForm():
+class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired("Ingresa tu correo"), Email("Ingresa tu correo correcto")])
     password = PasswordField("Password", validators=[DataRequired("Ingresa la contraseña")])
     submit = SubmitField("Sign in")
