@@ -10,7 +10,8 @@ config = {
   "apiKey": "AIzaSyBgbGvUXaV2Npjvr5A04AW48TwSpJvouuI",
   "authDomain": "project-7682141674235767650.firebaseapp.com",
   "databaseURL": "https://kinto.firebaseio.com",
-  "storageBucket": "project-7682141674235767650.appspot.com"
+  "storageBucket": "project-7682141674235767650.appspot.com",
+  "serviceAccount":"./kintos-83468dd3a92e.json"
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -85,7 +86,9 @@ def invest():
         total = request.form.get('total')
         data = {'amount':amount, 'duration': duration, 'total':total }
         data = json.dumps(data, ensure_ascii=False)
-        db.child("invests").child(email).push(data)
+        #data = {"name": "Mortimer 'Morty' Smith"}
+        db.child("users").push(data)
+
         return "done!"
         #token = session("idToken")
     elif request.method == "GET":
