@@ -29,11 +29,25 @@
                   
                   <div class="form-group">
                     <!--{{ form.email.label }}-->
+                    {% if form.email.errors %}
+                        {% for error in form.email.errors %}
+                            <p class="error-message">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if message %}
+                        <p class="error-message">{{ message }}</p>
+                    {% endif %}
+                    
                     {{ form.email(placeholder='Correo electrónico') }}
                   </div>
                   
                   <div class="form-group">
                     <!--{{ form.password.label }}-->
+                    {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                            <p class="error-message">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
                     {{ form.password(placeholder="Contraseña") }}
                   </div>
                   
@@ -41,6 +55,7 @@
                 </form>
           
               </div>
+              <a href="{{ url_for('recover')}}">¿Olvidaste tu contraseña?</a>
           </main>
       </div>
     </div>

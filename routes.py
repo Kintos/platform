@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-from forms import SignupForm, LoginForm, InvestForm, LoanForm
+from forms import SignupForm, LoginForm, InvestForm, LoanForm, RecoverForm
+from requests.exceptions import HTTPError
 
 import os
-import pyrebase
 import json
 import openpay
+import pyrebase
 
 config = {
   "apiKey": "AIzaSyBgbGvUXaV2Npjvr5A04AW48TwSpJvouuI",
@@ -35,14 +36,18 @@ def login():
         if form.validate() == False:
             return render_template("login.html", form = form)
         else:
-            email = form.email.data
-            password = form.password.data
-            
-            user = auth.sign_in_with_email_and_password(email, password)
-            userIdToken = user['idToken']
-            session["email"] = email
-            session["idToken"] = userIdToken
-            return redirect(url_for('home'))
+            try:
+                email = form.email.data
+                password = form.password.data
+                user = auth.sign_in_with_email_and_password(email, password)
+                userIdToken = user['idToken']
+                session["email"] = email
+                session["idToken"] = userIdToken
+                return redirect(url_for('home'))
+            except HTTPError as e:
+                print("Authentication error")
+                return render_template("login.html", form=form, message = "Por favor revise sus datos")
+                #return redirect(url_for('login'))
             
     elif request.method == "GET":
         return render_template("login.html", form = form)
@@ -56,25 +61,49 @@ def signup():
         if form.validate() == False:
             return render_template('signup.html', form = form)
         else :
-            user = auth.create_user_with_email_and_password(form.email.data, form.password.data)
-            #auth.send_email_verification(user['idToken'])
-            session["email"] = form.email.data
-            session["idToken"] = user['idToken']
-            return redirect(url_for("home"))
-    
+            try:
+                user = auth.create_user_with_email_and_password(form.email.data, form.password.data)
+                auth.send_email_verification(user['idToken'])
+                session["email"] = form.email.data
+                session["idToken"] = user['idToken']
+                return redirect(url_for("home"))
+            except HTTPError as e:
+                print(e.args())
+                return render_template("signup.html", form = form, message = "Ese correo ya esta registrado")
+                
     elif request.method == "GET":
         return render_template("signup.html", form = form)
 
+@app.route("/recover", methods=["POST", "GET"])
+def recover():
+    form = RecoverForm()
+    if request.method == "POST":
+        if form.validate() == False:
+            return render_template("recover.html", form = form)
+        else:
+            try:
+                email = form.email.data
+                auth.send_password_reset_email(email)
+                return render_template("recover.html", form=form, message = "Correo de recuperacion enviado")
+            except HTTPError as e:
+                print("Email error")
+                return render_template("recover.html", form=form, message = "Correo no valido")
+    elif request.method == "GET":
+        return render_template("recover.html", form = form)
 
 @app.route("/home")
 def home():
-    return render_template("home.html")
-
-    
+    if "email" in session :
+        return render_template("home.html")
+    else :
+        return redirect(url_for("index"))
+        
 @app.route("/mov")
 def mov():
-    return render_template("mov.html")
-
+    if "email" in session :
+        return render_template("mov.html")
+    else :
+        return redirect(url_for("index"))
     
 @app.route("/invest", methods=["GET", "POST"])
 def invest():
@@ -118,7 +147,21 @@ def loan():
 
 @app.route("/support")
 def support():
-    return render_template("support.html")
+    if "email" in session :
+        return render_template("support.html")
+    else :
+        return redirect(url_for("index"))
+        
+@app.route("/settings")
+def settings():
+    if "email" in session :
+        return render_template("settings.html")
+    else :
+        return redirect(url_for("index"))        
+        
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404        
     
 @app.route("/logout")    
 def logout():

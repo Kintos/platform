@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Kintos</title>
+
+    <link href="https://bootswatch.com/flatly/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="{{ url_for('static', filename='css/styles_login.css') }}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+    <div class="form">
+
+      <div class="tab-content">
+        <main>
+            <div>
+                <h1>Recuperar contraseña</h1>
+                
+                <form method="POST" action="/recover">
+                  {{ form.hidden_tag() }}
+                  <div class="form-group">
+                            <!--{{ form.email.label }}-->
+                                {% if form.email.errors %}
+                                    {% for error in form.email.errors %}
+                                        <p class="error-message">{{ error }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if message %}
+                                    <p class="error-message">{{ message }}</p>
+                                {% endif %}
+                            {{ form.email(placeholder="Correo electrónico") }}
+                        </div>
+                  {{ form.submit(class="button button-block") }}
+                </form>
+          
+              </div>
+          </main>
+      </div>
+    </div>
+</body>
+
+</html>

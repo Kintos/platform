@@ -25,3 +25,7 @@ class LoanForm(FlaskForm):
     duration = StringField('Duration')
     total = StringField('Total')
     submit = SubmitField('Request')
+    
+class RecoverForm(FlaskForm):
+    email = StringField('Email', validators = [DataRequired("Ingresa tu correo"), Email("Ingresa tu correo correcto")])
+    submit = SubmitField("Recover password")
