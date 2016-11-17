@@ -11,10 +11,10 @@
 
     <title>Kintos</title>
 
-    <link href="https://bootswatch.com/flatly/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="https://bootswatch.com/sandstone/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="{{ url_for('static', filename='css/sb-admin-2.css') }}" rel="stylesheet">
     <script src="https://use.fontawesome.com/5ba74422f5.js"></script>
-
+    <script src="https://cdn.smooch.io/smooch.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url_for('home') }}">KINTOS.</a>
+                <a class="navbar-brand" href="{{ url_for('home') }}">K I N T O S . </a>
             </div>
             <!-- /.navbar-header -->
 
@@ -63,10 +63,11 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-2x"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="{{ url_for('logout')}}"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+                        <li>
+                            <a href="{{ url_for('logout')}}"><i class="fa fa-sign-out fa-2x"></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -80,45 +81,33 @@
                     <ul class="nav" id="side-menu">
                         <li>
                             <a href="{{ url_for('home') }}" data-toggle="tooltip" data-placement="right" title="Inicio">
-                                <img id="logo" width="75px" src="{{ url_for('static', filename='img/bank.png') }}" />
+                                <img id="logo" width="50px" src="{{ url_for('static', filename='img/bank.png') }}" />
                             </a>
                         </li>
                         <li>
                             <a href="{{ url_for('loan') }}" data-toggle="tooltip" data-placement="right" title="Solicitar préstamo">
-                                <img id="logo" width="75px" src="{{ url_for('static', filename='img/get-money.png') }}" />
+                                <img id="logo" width="50px" src="{{ url_for('static', filename='img/get-money.png') }}" />
                             </a>
                         </li>
                         <li>
                             <a href="{{ url_for('invest') }}" data-toggle="tooltip" data-placement="right" title="Realizar inversión">
-                                <img id="logo" width="75px" src="{{ url_for('static', filename='img/insert-coin.png') }}" />
+                                <img id="logo" width="50px" src="{{ url_for('static', filename='img/insert-coin.png') }}" />
                             </a>
                         </li>
-                        <!--
-                        <li>
-                            <a href="#"><i class="fa fa-line-chart  fa-5x"></i><span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="{{ url_for('invest') }}">Invertir</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url_for('loan') }}">Solicitar préstamo</a>
-                                </li>
-                            </ul>
-                            
-                        </li><!-- /.nav-second-level -->
+                        
                         <li>
                             <a href="{{ url_for('settings') }}" data-toggle="tooltip" data-placement="right" title="Configuraciones">
-                                <img id="logo" width="75px" src="{{ url_for('static', filename='img/safebox.png') }}" />
+                                <img id="logo" width="50px" src="{{ url_for('static', filename='img/safebox.png') }}" />
                             </a>
                         </li>
                         <li>
                             <a href="{{ url_for('mov') }}" data-toggle="tooltip" data-placement="right" title="Movimientos">
-                                <img id="logo" width="75px" src="{{ url_for('static', filename='img/receipt.png') }}" />
+                                <img id="logo" width="50px" src="{{ url_for('static', filename='img/receipt.png') }}" />
                             </a>
                         </li>
                         <li>
                             <a href="{{ url_for('support') }}" data-toggle="tooltip" data-placement="right" title="Soporte">
-                                <img id="logo" width="75px" src="{{ url_for('static', filename='img/store.png') }}" />
+                                <img id="logo" width="50px" src="{{ url_for('static', filename='img/store.png') }}" />
                             </a>
                         </li>
                     </ul>
@@ -159,6 +148,9 @@
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
         });
+        </script>
+        <script>
+            Smooch.init({ appToken: '89tcw52xbj9y6hnprflb49jot' });
         </script>
 <!--
     <script src="../dist/js/sb-admin-2.js"></script>

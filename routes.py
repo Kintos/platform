@@ -22,13 +22,13 @@ db = firebase.database()
 
 app = Flask(__name__)
 
-app.secret_key = "development-key"
+#randome secret development key
+app.secret_key = "b'\x82\xddj\x06\x9bm\x06\xca,{\xb3\xee\xb0\x82\xbf_\x87x\x10\x9e\xd5f\xd3\xb8'"
 
 @app.route("/")
 def index():
     return render_template("index.html")
 
-    
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -51,7 +51,6 @@ def login():
             
     elif request.method == "GET":
         return render_template("login.html", form = form)
-
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
@@ -125,7 +124,6 @@ def invest():
             return render_template('invest.html', form = form)
         else :
             return redirect(url_for("index"))
-
     
 @app.route("/loan",  methods=["GET", "POST"])
 def loan():
@@ -143,7 +141,6 @@ def loan():
             return render_template('loan.html', form = form)
         else :
             return redirect(url_for("index"))
-
 
 @app.route("/support")
 def support():
