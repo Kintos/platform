@@ -75,12 +75,14 @@ body {
   padding-right: 0;
 }
 
-
 .sidebar ul li {
-    margin: 10px;
+    margin: 0px;
+    margin-bottom: 10px;
+    
 }
 .sidebar ul li a.active {
  background-color: #ecf0f1;
+ text-align: center;
 }
 .sidebar .arrow {
   float: right;
