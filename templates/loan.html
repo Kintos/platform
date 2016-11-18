@@ -19,7 +19,12 @@
         <div class="caja">
             
             <form class="form-horizontal form-pricing" role="form" method="POST" action="/loan">
-                
+                {% if loanAccepted %}
+                <div class="alert alert-success" role="alert"> {{ loanAccepted }}</div>
+                {% endif %}
+                {% if message %}
+                <div class="alert alert-danger" role="alert"> {{ message }}</div>
+                {% endif %}
                 <div class="caja-slider">
                     <h4 class="grande">Cantidad</h4>
                     <span>El préstamo mínimo es de 1000</span>
@@ -57,7 +62,7 @@
                     
                     <hr class="style">
                     <div class="form-group total">
-                        <label for="total" class="col-sm-6 control-label"><strong>Total Semanal: </strong></label>
+                        <label for="total" class="col-sm-6 control-label"><strong>Pago semanal: </strong></label>
                         <div class="col-sm-6">
                             <input type="hidden" id="total" name="total" class="form-control">
                             <p class="precio lead" id="total-label"></p>
@@ -78,5 +83,5 @@
     </div>
     
 </div>
-<script src="{{ url_for('static', filename='js/actions_prestamo.js') }}"></script>
+
 {% endblock %}

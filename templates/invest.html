@@ -5,12 +5,19 @@
 <link href="{{ url_for('static', filename='css/styles_invertir.css') }}" rel="stylesheet">
 
 <div id="page-wrapper">
+  
   <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Invertir</h1>
         </div>
     </div>
     <div class="container">
+      {% if investAccepted %}
+        <div class="alert alert-success" role="alert"> {{ investAccepted }}</div>
+      {% endif %}
+      {% if message %}
+        <div class="alert alert-danger" role="alert"> {{ message }}</div>
+      {% endif %}
         <div class="caja">
             <form class="form-horizontal form-pricing" role="form" action="/invest" method="POST">
                 <div class="caja-slider">
@@ -69,5 +76,4 @@
           </div>
         </div>
     </div>
-
 {% endblock %}

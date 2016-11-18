@@ -12,6 +12,7 @@ User
     name
     apellido
     idopenpay
+    
 Movimientos
     Token de usuario
         loans  
@@ -22,3 +23,4 @@ Movimientos
         Inversion
             Cantidad
             Fecha
+            Mg5sR1DA0ZfZwpGzAbfWEok3B612

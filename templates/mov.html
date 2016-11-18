@@ -10,32 +10,32 @@
     </div>
     <div class="row">
         <div class="col-log-12">
-            <div class="list-group">
-                <a href="#" class="list-group-item"> Prestamo por 1500 con una duracion de dos semanas
-                <span class="pull-right text-muted small"><em>Hace 40 minutos</em>
-                </span>
-                </a>
-                <a href="#" class="list-group-item"> Inversion realizada por 1000, el equipo de Kintos te agradece tu apoyo!!
-                <span class="pull-right text-muted small"><em>Hace 2 dias</em>
-                </span>
-                </a>
-                <a href="#" class="list-group-item"> Prestamo por 1000 con una duracion de semana semanas
-                <span class="pull-right text-muted small"><em>Hace 8 dias</em>
-                </span>
-                </a>
-                <a href="#" class="list-group-item"> Prestamo por 1500 con una duracion de semana semanas
-                <span class="pull-right text-muted small"><em>Hace 18 dias</em>
-                </span>
-                </a>
-                <a href="#" class="list-group-item"> Inversion realizada por 2500, el equipo de Kintos te agradece tu apoyo!!
-                <span class="pull-right text-muted small"><em>Hace 20 dias</em>
-                </span>
-                </a>
-            </div>
+            <ul class="list-group">
+                {% if loans %}
+                    {% for loan in loans%}
+                        <li class="list-group-item list-group-item-success"> Prestamo por {{ loan[1]['total'] }} con una duracion de {{ loan[1]['duration'] }} semanas con estado de {{ loan[1]['state'] }}
+                        <span class="pull-right text-muted small"><em>{{ loan[1]['date'] }}</em>
+                        </span>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+                {% if invests %}
+                    {% for invest in invests %}
+                        <li class="list-group-item list-group-item-info"> Prestamo por {{ invest[1]['total'] }} con una duracion de {{ invest[1]['duration'] }} semanas con estado de {{ invest[1]['state'] }}
+                        <span class="pull-right text-muted small"><em>{{ invest[1]['date'] }}</em>
+                        </span>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <li  class="list-group-item"> Prestamo por 1000 con una duracion de semana semanas
+                    <span class="pull-right text-muted small"><em>Hace 8 dias</em>
+                    </span>
+                    </li>
+                {% endif %}
+
+            </ul>
         </div>
     </div>
-    
-    
 </div>
 
 

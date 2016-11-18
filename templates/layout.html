@@ -35,6 +35,7 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
+                <!--
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -58,16 +59,16 @@
                             </a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
+                    
+                </li><!-- /.dropdown-alerts -->
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-2x"></i> <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li>
-                            <a href="{{ url_for('logout')}}"><i class="fa fa-sign-out fa-2x"></i> Salir</a>
+                            <a href="{{ url_for('logout')}}"><i class="fa fa-sign-out fa-fw fa-2x"></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -132,29 +133,16 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    
-<!--
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
-     Metis Menu Plugin JavaScript 
-    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
--->
-   
-
-    <!-- Custom Theme JavaScript -->
-        <script src="{{ url_for('static', filename='js/sb-admin-2.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/actions_invertir.js') }}"></script>
-        <script>
+<!-- Custom Theme JavaScript -->
+    <script src="{{ url_for('static', filename='js/sb-admin-2.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/actions_prestamo.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script>
         $(document).ready(function(){
             $('[data-toggle="tooltip"]').tooltip();
         });
-        </script>
-        <script>
-            Smooch.init({ appToken: '89tcw52xbj9y6hnprflb49jot' });
-        </script>
-<!--
-    <script src="../dist/js/sb-admin-2.js"></script>
--->
+    </script>
 </body>
 
 </html>

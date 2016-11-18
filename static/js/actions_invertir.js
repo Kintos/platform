@@ -30,12 +30,12 @@ $(document).ready(function() {
         var $cantidad = slider == 1?val:$("#cantidad").val();
         var $duracion = slider == 2?val:$("#duracion").val();
         var $subtotal = ($cantidad / $duracion) * 1.15;
-         $total = "$" + $subtotal.toFixed(2);
+        $total = "$" + $subtotal.toFixed(2);
          $( "#cantidad" ).val($cantidad);
          $( "#cantidad-label" ).text($cantidad);
          $( "#duracion" ).val($duracion);
          $( "#duracion-label" ).text($duracion);
-         $( "#total" ).val($total);
+         $( "#total" ).val($subtotal);
          $( "#total-label" ).text($total);
 
          $('#slider a').html('<label><span class="glyphicon glyphicon-chevron-left"></span> '+$cantidad+' <span class="glyphicon glyphicon-chevron-right"></span></label>');
