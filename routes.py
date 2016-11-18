@@ -94,8 +94,7 @@ def login():
                 user = auth.sign_in_with_email_and_password(email, password)
                 session["email"] = email
                 session["localId"] = user['localId']
-                info = db.child("users").child(session["localId"]).get()
-                info = info.val()
+                info = db.child("users").child(session["localId"]).get().val()
                 session["fname"] = info['fname']
                 session["lname"] = info['lname']
                 session["level"] = info["level"]
@@ -252,7 +251,8 @@ def loan():
             duration = request.form.get('duration')
             pagoSemanal = request.form.get('total')
             total = float(duration) * float(pagoSemanal)
-            data = {'amount':amount, 
+            data = {
+                    'amount':amount, 
                     'duration': duration, 
                     'total':total,
                     'pagoSemanal': pagoSemanal,
@@ -261,19 +261,20 @@ def loan():
                     }
             newexp = int(session["exp"]) + 150
             gamification(session["level"], newexp)
-            #print(session["exp"])
-            card = db.child("users").child(session["localId"]).child("card/id").get()
+            card = db.child("users").child(session["localId"]).child("openpay_card").get().val()
             customer = openpay.Customer.retrieve(session["openpay_id"])
-            customer.payouts.create(
+            payout = openpay.Payout.create_as_merchant(
                 method='card',
-                destination_id = card, 
-                amount= amount, 
+                destination_id = card["id"],
+                amount = amount, 
                 description="Prestamo", 
                 order_id=current.strftime("%d-%m-%Y %H:%M")
             )
+            
+            print(payout)
+            
             db.child("users").child(session["localId"]).update({"level": session["level"]})
             db.child("users").child(session["localId"]).update({"exp": session["exp"]})
-            
             db.child("loans").child(session['localId']).push(data)
 
             return render_template("loan.html", form=form, loanAccepted = "Prestamo realizado de manera correcta")
