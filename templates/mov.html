@@ -5,7 +5,8 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Movimientos Recientes</h1>
+            <h1 class="page-header"><i class="fa fa-tasks"></i>
+            &nbsp;Tus movimientos</h1>
         </div>
     </div>
     <div class="row">
@@ -26,10 +27,9 @@
                         </span>
                         </li>
                     {% endfor %}
-                {% else %}
-                    <li  class="list-group-item"> Prestamo por 1000 con una duracion de semana semanas
-                    <span class="pull-right text-muted small"><em>Hace 8 dias</em>
-                    </span>
+                {% endif %}
+                {% if not loans and not invest %}
+                    <li  class="list-group-item"> No se ha realizado ninguna inversion o prestamo
                     </li>
                 {% endif %}
 

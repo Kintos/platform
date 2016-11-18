@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div id="page-wrapper">
+  
+  <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">
+                <i class="fa fa-rocket"></i>
+                ¡Configura tu cuenta para despegar!</h1>
+        </div>
+    </div>
+    <div class="container">
+        <main>
+            <div>
+                <form method="POST" action="/settings">
+                    {{ form.hidden_tag() }}
+                    
+                    {% if accepted %}
+                        <p class="alert alert-success">{{accepted}}</p>
+                    {% endif %}
+                    
+                    {% if not_accepted %}
+                        <p class="alert error-message">{{not_accepted}}</p>
+                    {% endif %}
+                    
+                    <br>
+                    <label><i class="fa fa-credit-card"></i>
+                        Tarjeta de débito</label>
+                        <br>
+                    <div class="form-group">
+                        <!--{{ form.card.label }}-->
+                        
+                            {% if form.card.errors %}
+                                {% for error in form.card.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        
+                        {{ form.card(placeholder="Numero de tarjeta", class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        <!--{{ form.cvv.label }}-->
+                        
+                            {% if form.cvv.errors %}
+                                {% for error in form.cvv.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                            
+                        {{ form.cvv(placeholder="CVV", class="form-control") }}
+                    </div>
+                    <div class="form-group">
+                        <!--{{ form.month.label }}-->
+                        
+                            {% if form.month.errors %}
+                                {% for error in form.month.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                            
+                        {{ form.month(placeholder="Mes", class="form-control", length="2") }}
+                    </div>
+                    <div class="form-group">
+                        <!--{{ form.year.label }}-->
+                        {% if message %}
+                        <p class="error-message">
+                            {{message}}
+                        </p>
+                        {% endif %}
+                            {% if form.year.errors %}
+                                {% for error in form.year.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {{ form.year(placeholder="Año", class="form-control", length="2") }}
+                    </div>
+                    <br>
+                    <label>
+                        <i class="fa fa-user-o"></i>
+                        Tu dirección postal</label>
+                        <br>
+                    <div class ="form-group">
+                        <!--{{ form.address.label }}-->
+                            {% if form.address.errors %}
+                                {% for error in form.address.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {{ form.address(placeholder="Direccion (Calle y número)", class="form-control") }}
+                    </div>
+                    <div class ="form-group">
+                        <!--{{ form.city.label }}-->
+                            {% if form.city.errors %}
+                                {% for error in form.city.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {{ form.city(placeholder="Tu ciudad", class="form-control") }}
+                    </div>
+                    <div class ="form-group">
+                        <!--{{ form.state.label }}-->
+                            {% if form.state.errors %}
+                                {% for error in form.state.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {{ form.state(placeholder="Tu estado", class="form-control") }}
+                    </div>
+                    <div class ="form-group">
+                        <!--{{ form.zipcode.label }}-->
+                            {% if form.zipcode.errors %}
+                                {% for error in form.zipcode.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        {{ form.zipcode(placeholder="Tu codigo postal", class="form-control") }}
+                    </div>
+                    {{ form.submit(class="btn btn-default btn-block", value="Actualizar") }}
+                </form>
+            </div>
+        </main>
+    </div>
+</div>    
+{% endblock %}

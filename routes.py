@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-from forms import SignupForm, LoginForm, InvestForm, LoanForm, RecoverForm
+from forms import SignupForm, LoginForm, InvestForm, LoanForm, RecoverForm, settingsForm
 from requests.exceptions import HTTPError
-from collections import OrderedDict
 
 import os
 import json
@@ -32,6 +31,52 @@ openpay.verify_ssl_certs = False
 openpay.merchant_id = "mompk30sik9s5j8x0pmf"
 openpay.production = False  # By default this works in sandbox mode
 
+def expFaltante(nivel, exp):
+    if nivel == 1:
+        result = "Experiencia faltante para el siguiente nivel:  " + str(500 - exp)
+    elif nivel == 2:
+        result = "Experiencia faltante para el siguiente nivel: " + str(1000 - exp)
+    elif nivel == 3:
+        result = "Experiencia faltante para el siguiente nivel: " + str(2000 - exp)
+    elif nivel == 4:
+        result =  "Experiencia faltante para el siguiente nivel: " + str(4000 - exp)
+    elif nivel == 0:
+        result = "Tienes que terminar el registro en configuracion para poder subir de nivel"
+    else:
+        result = "Felicidades haz alcanzado el nivel maximo"
+    return result
+    
+def gamification(nivel, exp):
+    print(nivel, exp)
+    if nivel == 1:
+        print("si entro")
+        if exp >= 500:
+            session["level"] = 2
+            session["exp"] = exp - 500
+        else:
+            session["exp"] = exp
+            print("hola")
+    elif nivel == 2:
+        if exp >= 1000:
+            session["level"] = 3
+            session["exp"] = exp - 1000
+        else:
+            session["exp"] = exp
+    elif nivel == 3:
+        if exp >= 2000:
+            session["level"] = 4
+            session["exp"] = exp - 2000
+        else:
+            session["exp"] = exp
+    elif nivel == 4:
+        if exp >= 4000:
+            session["level"] = 5
+            session["exp"] = 0
+        else:
+            session["exp"] = exp
+    else:
+        return 0
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -53,6 +98,10 @@ def login():
                 info = info.val()
                 session["fname"] = info['fname']
                 session["lname"] = info['lname']
+                session["level"] = info["level"]
+                session["exp"] = info["exp"]
+                session["openpay_id"] = info["openpay_id"]
+                session["openpay_clabe"] = info["openpay_clabe"]
                 return redirect(url_for('home'))
             except HTTPError as e:
                 print("Authentication error")
@@ -72,29 +121,38 @@ def signup():
     if request.method == "POST":
         if form.validate() == False:
             return render_template('signup.html', form = form)
-        else :
+        else:
             try:
                 user = auth.create_user_with_email_and_password(form.email.data, form.password.data)
                 #auth.send_email_verification(user['idToken'])
-                session["email"] = form.email.data
-                session["localId"] = user['localId']
-                session["fname"] = form.first_name.data
-                session["lname"] = form.last_name.data
-                data = {
-                        'fname': form.first_name.data,
-                        'lname': form.last_name.data,
-                        'email': form.email.data
-                        }
                 customer = openpay.Customer.create(
                     name = form.first_name.data,
                     last_name = form.last_name.data,
                     email = form.email.data,
-                    phone_number="44209087654"
-                )                        
+                    phone_number = form.phone.data
+                )
+                session["email"] = form.email.data
+                session["localId"] = user['localId']
+                session["fname"] = form.first_name.data
+                session["lname"] = form.last_name.data
+                session["level"] = 0
+                session["exp"] = 0
+                session["openpay_id"] = customer["id"]
+                session["openpay_clabe"] = customer["clabe"]
+                data = {
+                        'fname': form.first_name.data,
+                        'lname': form.last_name.data,
+                        'email': form.email.data,
+                        'phone': form.phone.data,
+                        'openpay_id': customer["id"],
+                        'openpay_clabe': customer["clabe"],
+                        'level': 0,
+                        'exp': 0
+                        }
                 db.child("users").child(session["localId"]).set(data)
                 return redirect(url_for("home"))
             except HTTPError as e:
-                print(e.args())
+                #print(e.args())
                 return render_template("signup.html", form = form, message = "Ese correo ya esta registrado")
                 
     elif request.method == "GET":
@@ -130,7 +188,9 @@ def home():
             loan = len(loan)
         if invest is not None :
             invest = len(invest)
-        return render_template("home.html", loan = loan, invest = invest, name = session["fname"])
+            
+        exp = expFaltante(session["level"], session["exp"])
+        return render_template("home.html", loan = loan, invest = invest, name = session["fname"], nivel = session["level"], exp = exp)
     else :
         return redirect(url_for("index"))
         
@@ -139,12 +199,12 @@ def mov():
     if "email" in session :
         loans = db.child('loans').child(session['localId']).get().val()
         invests = db.child('invests').child(session['localId']).get().val()
-        loans = list(loans.items())
-        invests = list(invests.items())
-        for invest in invests:
-            print(invest[1]['total'])
-        print(loans)
-        #data = json.loads(loans, object_pairs_hook=OrderedDict)
+        
+        if loans is not None :
+            loans = list(loans.items())
+        if invests is not None :
+            invests = list(invests.items())
+
         return render_template("mov.html", invests = invests, loans = loans)
     else :
         return redirect(url_for("index"))
@@ -163,10 +223,15 @@ def invest():
                     'duration': duration, 
                     'total':total,
                     'pagoSemanal': pagoSemanal,
-                    'state': 'Pago pendiente',
+                    'state': 'pago pendiente',
                     'date': current.strftime("%d-%m-%Y %H:%M")
                     }
+            newexp = int(session["exp"]) + 250
+            gamification(session["level"], newexp)
+            db.child("users").child(session["localId"]).update({"level": session["level"]})
+            db.child("users").child(session["localId"]).update({"exp": session["exp"]})
             db.child("invests").child(session['localId']).push(data)
+
             return render_template("invest.html", form=form, investAccepted = "Prestamo realizado de manera correcta")
         except HTTPError as e:
             return render_template("invest.html", form = form, message = "Se presento un error al realizar la operacion")
@@ -191,10 +256,26 @@ def loan():
                     'duration': duration, 
                     'total':total,
                     'pagoSemanal': pagoSemanal,
-                    'state': 'Pago pendiente',
+                    'state': 'pago pendiente',
                     'date': current.strftime("%d-%m-%Y %H:%M")
                     }
+            newexp = int(session["exp"]) + 150
+            gamification(session["level"], newexp)
+            #print(session["exp"])
+            card = db.child("users").child(session["localId"]).child("card/id").get()
+            customer = openpay.Customer.retrieve(session["openpay_id"])
+            customer.payouts.create(
+                method='card',
+                destination_id = card, 
+                amount= amount, 
+                description="Prestamo", 
+                order_id=current.strftime("%d-%m-%Y %H:%M")
+            )
+            db.child("users").child(session["localId"]).update({"level": session["level"]})
+            db.child("users").child(session["localId"]).update({"exp": session["exp"]})
+            
             db.child("loans").child(session['localId']).push(data)
+
             return render_template("loan.html", form=form, loanAccepted = "Prestamo realizado de manera correcta")
         except:
             return render_template("loan.html", form=form, message = "Se presento un error al realizar la operacion")
@@ -211,11 +292,45 @@ def support():
     else :
         return redirect(url_for("index"))
         
-@app.route("/settings")
+@app.route("/settings", methods = ["GET","POST"])
 def settings():
+    form = settingsForm()
     if "email" in session :
-        return render_template("settings.html")
-    else :
+        if request.method =="GET":
+            return render_template("settings.html", form = form)
+        elif request.method == "POST":
+            customer = openpay.Customer.retrieve(session["openpay_id"])
+            card = request.form.get('card')
+            cvv = request.form.get('cvv')
+            month = request.form.get('month')
+            year = request.form.get('year')
+            address = request.form.get('address')
+            zipcode = request.form.get('zipcode')
+            state = request.form.get('state')
+            city = request.form.get('city')
+            try:
+                card = customer.cards.create(
+                    card_number=card,
+                    holder_name=session["fname"]+" "+session["lname"],
+                    expiration_year= year,
+                    expiration_month= month,
+                    cvv2=cvv,
+                    address={
+                        "city": city,
+                        "country_code":"MX",
+                        "postal_code": zipcode,
+                        "line1": address,
+                        "state": state,
+                   })
+            except openpay.CardError as e:
+                return render_template("settings.html", form = form, not_accepted="Tu tarjeta fue rechazada")
+                
+            
+            db.child("users").child(session["localId"]).update({"openpay_card": card})
+            db.child("users").child(session["localId"]).update({"openpay_card_id": card.id})
+            
+            return render_template("settings.html", form = form, accepted="Tu tarjeta fue aceptada")
+    else:
         return redirect(url_for("index"))        
         
 @app.errorhandler(404)
