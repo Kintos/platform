@@ -33,7 +33,7 @@
                         
                             {% if form.card.errors %}
                                 {% for error in form.card.errors %}
-                                    <p class="error-message">{{ error }}</p>
+                                    <p class="alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                         
@@ -44,7 +44,7 @@
                         
                             {% if form.cvv.errors %}
                                 {% for error in form.cvv.errors %}
-                                    <p class="error-message">{{ error }}</p>
+                                    <p class="alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                             
@@ -55,7 +55,7 @@
                         
                             {% if form.month.errors %}
                                 {% for error in form.month.errors %}
-                                    <p class="error-message">{{ error }}</p>
+                                    <p class="alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                             
@@ -70,7 +70,7 @@
                         {% endif %}
                             {% if form.year.errors %}
                                 {% for error in form.year.errors %}
-                                    <p class="error-message">{{ error }}</p>
+                                    <p class="alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                         {{ form.year(placeholder="Año", class="form-control", length="2") }}
@@ -84,7 +84,7 @@
                         <!--{{ form.address.label }}-->
                             {% if form.address.errors %}
                                 {% for error in form.address.errors %}
-                                    <p class="error-message">{{ error }}</p>
+                                    <p class="alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                         {{ form.address(placeholder="Direccion (Calle y número)", class="form-control") }}
@@ -93,7 +93,7 @@
                         <!--{{ form.city.label }}-->
                             {% if form.city.errors %}
                                 {% for error in form.city.errors %}
-                                    <p class="error-message">{{ error }}</p>
+                                    <p class="alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                         {{ form.city(placeholder="Tu ciudad", class="form-control") }}
@@ -102,7 +102,7 @@
                         <!--{{ form.state.label }}-->
                             {% if form.state.errors %}
                                 {% for error in form.state.errors %}
-                                    <p class="error-message">{{ error }}</p>
+                                    <p class="alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                         {{ form.state(placeholder="Tu estado", class="form-control") }}
@@ -111,7 +111,7 @@
                         <!--{{ form.zipcode.label }}-->
                             {% if form.zipcode.errors %}
                                 {% for error in form.zipcode.errors %}
-                                    <p class="error-message">{{ error }}</p>
+                                    <p class="alert alert-danger">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                         {{ form.zipcode(placeholder="Tu codigo postal", class="form-control") }}

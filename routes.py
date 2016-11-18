@@ -271,8 +271,6 @@ def loan():
                 order_id=current.strftime("%d-%m-%Y %H:%M")
             )
             
-            print(payout)
-            
             db.child("users").child(session["localId"]).update({"level": session["level"]})
             db.child("users").child(session["localId"]).update({"exp": session["exp"]})
             db.child("loans").child(session['localId']).push(data)
@@ -282,10 +280,49 @@ def loan():
             return render_template("loan.html", form=form, message = "Se presento un error al realizar la operacion")
     elif request.method == "GET":
         if "email" in session :
-            return render_template('loan.html', form = form)
+            data = db.child("loans").child(session["localId"]).get().val()
+            print(data)
+            if data is not None:
+                data = list(data.items())
+                for loan in data:
+                    if loan[1]['state'] == "pago pendiente":
+                        return redirect(url_for("payment"))
+            else:
+                return render_template('loan.html', form = form)
         else :
             return redirect(url_for("index"))
 
+@app.route("/payment", methods = ["GET", "POST"])
+def payment():
+    form = LoanForm()
+    if "email" in session:
+        if request.method == "POST":
+            current = datetime.datetime.now()
+            data = db.child("loans").child(session["localId"]).get().val()
+            amount = 0
+            if data is not None:
+                data = list(data.items())
+                for loan in data:
+                    amount = data[1]['total']
+            else:
+                return render_template('payment.html')
+            fee = openpay.Fee.create(
+                customer_id = session["openpay_id"],
+                amount = amount,
+                description = "Pago de codigo",
+                order_id = "idPago"+current.strftime("%d-%m-%Y %H:%M")
+            )
+            #data = db.child("loans").child(session["localId"]).set({"state": "pagado"})
+            return render_template("loan.html", form = form, loanAccepted = "Tu pago ha sido recibido exitosamente")
+                        
+        elif request.method == "GET":
+            if "email" in session:
+                return render_template("payment.html")
+            else:
+                return redirect(url_for("index"))
+    else :
+        return redirect(url_for("index"))
+        
 @app.route("/support")
 def support():
     if "email" in session :
@@ -296,43 +333,48 @@ def support():
 @app.route("/settings", methods = ["GET","POST"])
 def settings():
     form = settingsForm()
+    
     if "email" in session :
         if request.method =="GET":
             return render_template("settings.html", form = form)
         elif request.method == "POST":
-            customer = openpay.Customer.retrieve(session["openpay_id"])
-            card = request.form.get('card')
-            cvv = request.form.get('cvv')
-            month = request.form.get('month')
-            year = request.form.get('year')
-            address = request.form.get('address')
-            zipcode = request.form.get('zipcode')
-            state = request.form.get('state')
-            city = request.form.get('city')
-            try:
-                card = customer.cards.create(
-                    card_number=card,
-                    holder_name=session["fname"]+" "+session["lname"],
-                    expiration_year= year,
-                    expiration_month= month,
-                    cvv2=cvv,
-                    address={
-                        "city": city,
-                        "country_code":"MX",
-                        "postal_code": zipcode,
-                        "line1": address,
-                        "state": state,
-                   })
-            except openpay.CardError as e:
-                return render_template("settings.html", form = form, not_accepted="Tu tarjeta fue rechazada")
+            if form.validate() == False:
+                return render_template("settings.html", form = form)
+            else:
+                customer = openpay.Customer.retrieve(session["openpay_id"])
+                card = request.form.get('card')
+                cvv = request.form.get('cvv')
+                month = request.form.get('month')
+                year = request.form.get('year')
+                address = request.form.get('address')
+                zipcode = request.form.get('zipcode')
+                state = request.form.get('state')
+                city = request.form.get('city')
+                try:
+                    card = customer.cards.create(
+                        card_number=card,
+                        holder_name=session["fname"]+" "+session["lname"],
+                        expiration_year= year,
+                        expiration_month= month,
+                        cvv2=cvv,
+                        address={
+                            "city": city,
+                            "country_code":"MX",
+                            "postal_code": zipcode,
+                            "line1": address,
+                            "state": state,
+                       })
+                except openpay.CardError as e:
+                    return render_template("settings.html", form = form, not_accepted="Tu tarjeta fue rechazada")
+                    
                 
-            
-            db.child("users").child(session["localId"]).update({"openpay_card": card})
-            db.child("users").child(session["localId"]).update({"openpay_card_id": card.id})
-            
-            return render_template("settings.html", form = form, accepted="Tu tarjeta fue aceptada")
+                db.child("users").child(session["localId"]).update({"openpay_card": card})
+                db.child("users").child(session["localId"]).update({"openpay_card_id": card.id})
+                
+                return render_template("settings.html", form = form, accepted="Tu tarjeta fue aceptada")
+                
     else:
-        return redirect(url_for("index"))        
+        return redirect(url_for("index"))
         
 @app.errorhandler(404)
 def page_not_found(error):
