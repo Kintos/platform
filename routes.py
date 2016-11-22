@@ -1,14 +1,16 @@
-from flask import Flask, render_template, request, session, redirect, url_for
-from forms import SignupForm, LoginForm, InvestForm, LoanForm, RecoverForm, settingsForm
-from requests.exceptions import HTTPError
-
 import os
 import json
 import openpay
 import pyrebase
 import datetime
 
-config = {
+from flask import Flask, render_template, request, session, redirect, url_for
+from forms import SignupForm, LoginForm, InvestForm, LoanForm, RecoverForm, settingsForm
+from requests.exceptions import HTTPError
+from openpay import error as openpayError
+
+
+firebaseConfig = {
   "apiKey": "AIzaSyBgbGvUXaV2Npjvr5A04AW48TwSpJvouuI",
   "authDomain": "project-7682141674235767650.firebaseapp.com",
   "databaseURL": "https://kinto.firebaseio.com",
@@ -16,7 +18,7 @@ config = {
   "serviceAccount":"./kintos-83468dd3a92e.json"
 }
 
-firebase = pyrebase.initialize_app(config)
+firebase = pyrebase.initialize_app(firebaseConfig)
 
 auth = firebase.auth()
 db = firebase.database()
@@ -145,6 +147,8 @@ def signup():
                         'phone': form.phone.data,
                         'openpay_id': customer["id"],
                         'openpay_clabe': customer["clabe"],
+                        'state' : 'Regular',
+                        'debt': 0,
                         'level': 0,
                         'exp': 0
                         }
@@ -231,7 +235,7 @@ def invest():
             db.child("users").child(session["localId"]).update({"exp": session["exp"]})
             db.child("invests").child(session['localId']).push(data)
 
-            return render_template("invest.html", form=form, investAccepted = "Prestamo realizado de manera correcta")
+            return render_template("invest.html", form=form, investAccepted = "Inversion realizado de manera correcta")
         except HTTPError as e:
             return render_template("invest.html", form = form, message = "Se presento un error al realizar la operacion")
     elif request.method == "GET":
@@ -270,9 +274,15 @@ def loan():
                 description="Prestamo", 
                 order_id=current.strftime("%d-%m-%Y %H:%M")
             )
-            
-            db.child("users").child(session["localId"]).update({"level": session["level"]})
-            db.child("users").child(session["localId"]).update({"exp": session["exp"]})
+            updated = {"level": session["level"],
+                        "exp": session["exp"],
+                        "state": "Adeudo",
+                        "debt": total
+            }
+            db.child("users").child(session["localId"]).set(updated)
+            #db.child("users").child(session["localId"]).update({"level": session["level"]})
+            #db.child("users").child(session["localId"]).update({"exp": session["exp"]})
+            #db.child("users").child(session["localId"]).update({"state": 'Adeudo'})
             db.child("loans").child(session['localId']).push(data)
 
             return render_template("loan.html", form=form, loanAccepted = "Prestamo realizado de manera correcta")
@@ -280,13 +290,9 @@ def loan():
             return render_template("loan.html", form=form, message = "Se presento un error al realizar la operacion")
     elif request.method == "GET":
         if "email" in session :
-            data = db.child("loans").child(session["localId"]).get().val()
-            print(data)
-            if data is not None:
-                data = list(data.items())
-                for loan in data:
-                    if loan[1]['state'] == "pago pendiente":
-                        return redirect(url_for("payment"))
+            data = db.child("users").child(session["localId"]).get().val()
+            if data['state'] == "Adeudo":
+                return redirect(url_for("payment"))
             else:
                 return render_template('loan.html', form = form)
         else :
@@ -297,24 +303,21 @@ def payment():
     form = LoanForm()
     if "email" in session:
         if request.method == "POST":
-            current = datetime.datetime.now()
-            data = db.child("loans").child(session["localId"]).get().val()
-            amount = 0
-            if data is not None:
-                data = list(data.items())
-                for loan in data:
-                    amount = data[1]['total']
-            else:
-                return render_template('payment.html')
-            fee = openpay.Fee.create(
-                customer_id = session["openpay_id"],
-                amount = amount,
-                description = "Pago de codigo",
-                order_id = "idPago"+current.strftime("%d-%m-%Y %H:%M")
-            )
-            #data = db.child("loans").child(session["localId"]).set({"state": "pagado"})
-            return render_template("loan.html", form = form, loanAccepted = "Tu pago ha sido recibido exitosamente")
-                        
+            try:
+                current = datetime.datetime.now()
+                data = db.child("users").child(session["localId"]).get().val()
+
+                fee = openpay.Fee.create(
+                    customer_id = session["openpay_id"],
+                    amount = int(data['debt']),
+                    description = "Pago de codigo",
+                    order_id = "idPago"+current.strftime("%d-%m-%Y %H:%M")
+                )
+                db.child("users").child(session["localId"]).update({"state": "Regular"})
+                #data = db.child("loans").child(session["localId"]).set({"state": "pagado"})
+                return render_template("loan.html", form = form, loanAccepted = "Tu pago ha sido recibido exitosamente, pyedes volver a pedir prestamos")
+            except openpayError.APIError as e:
+                return render_template("payment.html", error_message = "Ocurrio un error al realizar el pago", error_details = "No se han encontrado fondos suficientes en la cuenta en la tarjeta")
         elif request.method == "GET":
             if "email" in session:
                 return render_template("payment.html")
@@ -362,9 +365,11 @@ def settings():
                             "country_code":"MX",
                             "postal_code": zipcode,
                             "line1": address,
-                            "state": state,
-                       })
-                except openpay.CardError as e:
+                            "state": state
+                    })
+                    db.child("users").child(session["localId"]).update({"level": 1})
+                    session["level"] = 1
+                except openpayError.CardError as e:
                     return render_template("settings.html", form = form, not_accepted="Tu tarjeta fue rechazada")
                     
                 
