@@ -279,7 +279,7 @@ def loan():
                         "state": "Adeudo",
                         "debt": total
             }
-            db.child("users").child(session["localId"]).set(updated)
+            db.child("users").child(session["localId"]).update(updated)
             #db.child("users").child(session["localId"]).update({"level": session["level"]})
             #db.child("users").child(session["localId"]).update({"exp": session["exp"]})
             #db.child("users").child(session["localId"]).update({"state": 'Adeudo'})
@@ -380,6 +380,11 @@ def settings():
                 
     else:
         return redirect(url_for("index"))
+        
+        
+@app.route("/zohoverify/verifyforzoho.html")
+def zoho():
+    return render_template("verifyforzoho.html")
         
 @app.errorhandler(404)
 def page_not_found(error):
