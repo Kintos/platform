@@ -1,0 +1,70 @@
+C2417497
+
+1-17168430885
+
+devlatam 
+	plataforma
+	analytics / adwords ADWORDS 01 800 123 1634	
+zipzip
+	landing
+	bot
+	search engine/
+kintos
+	landing
+	new admin page
+	billing 
+INFORMACIÓN IMPORTANTE - Necesitas tener esto en cuenta antes de solicitar tu préstamo:
+
+    Debes de contar con un historial crediticio saludable
+    Debes de vivir en México
+    Debes de contar con IFE, INE ó PASAPORTE vigente
+    Debes de contar con una cuenta de banco a tu nombre, es ahí en donde depositaremos tu dinero
+    Para recibir tu préstamo hoy, deberás de terminar tu solicitud antes de las 16:30 horas
+
+PASOS PARA SOLICITAR TU PRÉSTAMO
+
+    Elige la cantidad y el plazo para tu préstamo: Puedes elegir entre $500 y $8,000 pesos y pagarlos en un plazo de 7, 14 o 30 días
+    Llena tu solicitud completa:: Llena una breve solicitud con tu información personal, de trabajo y de referencias. Es importante que ingreses únicamente información verídica
+    Espera la llamada de un agente: Si tu solicitud es aprobada, puedes recibir tu dinero en 30 minutos
+    Paga a tu préstamo y solicita uno nuevo: Recuerda pagar tu préstamo en tu fecha de pago, de esta manera, no tendrás problemas en buró de crédito.Además, al pagar tu préstamo, automáticamente podrás solicitar uno nuevo por una cantidad mayor* y en sólo 5 minutos
+
+*El monto máximo que prestamos, son $8,000 pesos.
+
+NO TE PREOCUPES: Toda la información que compartas, será utilizada únicamente con los fines especificados en nuestro AVISO DE PRIVACIDAD. 
+
+
+- antifraud -	
+
+	- fullcontact/pipl 
+	- microsoft cognitive api
+	- credit card jquery 
+	- placesjs 
+	- ipinfo.io 
+	- twilio 
+	- https://curp.munett.com/ 
+	- Algoritmo de Luhn
+	- http://bootsnipp.com/snippets/featured/mix-amp-match-register
+	- http://bootsnipp.com/snippets/featured/mix-amp-match-login
+	- http://bootsnipp.com/snippets/90bPm
+
+	- http://stackoverflow.com/questions/34512646/how-to-speed-up-api-requests
+
+	- https://www.block-disposable-email.com
+	- http://onlineemailvalidation.com/pricing
+	- https://www.istempmail.com/pricing
+	- https://www.mailinator.com/apidocs.jsp
+	- https://github.com/GeroldSetz/Mailinator-Domains
+	- https://gist.github.com/adamloving/4401361
+	- https://gist.github.com/asotirovski/6f58ad980196c98ab027
+
+	- https://github.com/sendgrid/sendgrid-python
+	- https://github.com/kootenpv/yagmail
+	- REAlEMAIL Heroku addon
+	
+	- http://raml.org/developers
+	
+
+	http://jsfiddle.net/zK5FN/2/
+	
+
+

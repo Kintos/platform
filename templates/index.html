@@ -1,164 +1,206 @@
 <!DOCTYPE HTML>
+<!--
+	Stellar by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
 	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>Kintos | Préstamos e inversiones.</title>
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/animate.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/icomoon.css') }}">
-		<link href="https://bootswatch.com/flatly/bootstrap.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-		<script src="{{ url_for('static', filename='js/modernizr-2.6.2.min.js') }}"></script>
+		<title>Kintos</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		
+		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
+		<!-- Milligram CSS minified -->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body>
-		<div class="fh5co-loader"></div>
-		<div id="page">
-		<nav class="fh5co-nav" role="navigation">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-xs-2">
-						<div id="fh5co-logo"><a href="{{url_for('index')}}">K I N T O S .</a></div>
-					</div>
-					<div class="col-xs-2 col-xs-offset-8">
-						<a href="{{url_for('login')}}">Entrar</a>
-					</div>
-				</div>
-			</div>
-		</nav>
-	
-		<header id="fh5co-header" class="fh5co-cover" role="banner" style="background-image:url(images/img_bg_1.jpg);">
-			<div class="overlay"></div>
-			<div class="container">
-				<div class="row">
-					<div class="col-md-10 col-md-offset-1 text-center">
-						<div class="display-t">
-							<div class="display-tc animate-box" data-animate-effect="fadeIn">
-								<h1>¡Te prestamos hasta $5000!</h1>
-								<h2>Solicita tu crédito ahora mismo</h2>
-								<p><a href="{{ url_for('signup') }}" class="btn btn-default">¡Comenzar ahora!</a></p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</header>
-	
-		<div class="container">
-			<div class="row">
-			</div>
-		</div>
-	
-		<div id="fh5co-portfolio">
-			<div class="container">
-				<div class="row animate-box">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>Kintos</h2>
-						<p>Micro créditos y préstamos a tan solo un click de distancia.</p>
-					</div>
-				</div>
-				<div class="row">
-					<div class="project">
-						<div class="col-md-8 col-md-push-5 animate-box" data-animate-effect="fadeInLeft">
-							<img class="img-responsive" src="images/screenshot1.png" alt="work">
-						</div>
-						<div class="col-md-4 col-md-pull-8 animate-box" data-animate-effect="fadeInRight">
-							<div class="mt">
-								<h3>¿Qué es Kintos?</h3>
-								<p>Kintos es una plataforma de créditos y préstamos micro basados en tu perfil social y enfocados a la competencia. Actualmente estamos en desarrollo, por lo que pedimos que tengas paciencia y mantente al tanto, pronto estaremos contigo. Si tienes dudas, quejas, sugerencias o sólo quieres decir algo, no dudes en contactarnos.</p>
-								<ul class="list-nav">
-									<li><i class="icon-check"></i>Acceso en todo el mundo</li>
-									<li><i class="icon-check"></i>Fácil de usar</li>
-									<li><i class="icon-check"></i>Atención a cliente 24/7</li>
-									<li><i class="icon-check"></i>La más alta seguridad</li>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	
-		<div id="fh5co-testimonial">
-			<div class="container">
-				<div class="row animate-box">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>Experiencias</h2>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-4 animate-box">
-						<div class="testimony">
-							<blockquote>
-								&ldquo;Ha cambiado mi perspectiva de las finanzas&rdquo;
-							</blockquote>
-							<p class="author"><cite>Juan Andres Rocha</cite></p>
-						</div>
-					</div>
-					<div class="col-md-4 animate-box">
-						<div class="testimony">
-							<blockquote>
-								&ldquo;Definitivamente lo usaría&rdquo;
-							</blockquote>
-							<p class="author"><cite>Fernando Chavez</cite></p>
-						</div>
-					</div>
-					<div class="col-md-4 animate-box">
-						<div class="testimony">
-							<blockquote>
-								&ldquo;10/10&rdquo;
-							</blockquote>
-							<p class="author"><cite>IGN</cite></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div id="fh5co-started">
-			<div class="container">
-				<div class="row animate-box">
-					<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-						<h2>Subscribete!</h2>
-						<p>Registrate para obtener más información</p>
-					</div>
-				</div>
-				<div class="row animate-box">
-					<div class="col-md-8 col-md-offset-2">
-						<form class="form-inline">
-							<div class="col-md-6 col-sm-6">
-								<div class="form-group">
-									<label for="email" class="sr-only">Email</label>
-									<input type="email" class="form-control" id="email" placeholder="Email">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<span class="logo"><img src="images/logo.svg" alt="" /></span>
+						<h1>Kintos</h1>
+						<p>Convierte tu <b>tarjeta de débito</b> en una de <b>crédito</b> desde tu <b>celular</b> <br />
+						con más beneficios que el <b>banco</b> y menos problemas.</p>						
+						<ul class="actions">
+                        		<li><a href="#intro" class="button special"><span class="fa fa-credit-card"></span> Comenzar ahora</a></li>
+								<li><a href="#" class="button"><span class="fa fa-login"></span>Entrar</a></li>
+						</ul>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="#intro" class="active">Comienza</a></li>
+							<li><a href="#first">Facilidades</a></li>
+							<li><a href="#second">Beneficios</a></li>
+							<li><a href="#cta">¡Alcanza tus metas!</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Introduction -->
+							<section id="intro" class="main">
+								<div class="spotlight">									
+									<div class="content">
+										<header class="major">
+											<h2>¿Estás listo para alcanzar tus metas?</h2>
+										</header>
+										<p align="justify">Sabemos lo <b>complicado y tendioso</b> que es tener una <b>tarjeta de crédito</b> con cualquier banco.<br><br>
+										El nuevo esquema de préstamos inmediatos de Kintos te permite obtener el dinero 
+										que necesitas al instante y recibir increíbles beneficios por alcanzar tus metas.</p>
+										<ul>
+											<b>Sólo necesitas</b>
+											<li>Tener una cuenta bancaria propia</li>
+											<li>Una foto con tu credencial de elector o pasaporte</li>
+											<li>Teléfono celular y correo electrónico</li>
+										</ul>
+										<ul class="actions">
+											<li><a href="generic.html" class="button">¡Registrarme ahora!</a></li>
+										</ul>
+									</div>
+									<div style="padding:40px;">
+										<span class="icon major style2 fa-rocket" style="padding:50px;"></span>	
+									</div>						
+									<!--<span class="image"><img src="images/pic01.jpg" alt="" /></span>-->
 								</div>
-							</div>
-							<div class="col-md-6 col-sm-6">
-								<button type="submit" class="btn btn-default btn-block">Subscribirse</button>
-							</div>
-						</form>
+							</section>
+
+						<!-- First Section -->
+							<section id="first" class="main special">
+								<header class="major">
+									<h2>Te damos muchas facilidades</h2>
+								</header>
+								<ul class="features">
+									<li>
+										<span class="icon major style1 fa-usd"></span>
+										<h3><b>Tu préstamo cuesta menos</b></h3>
+										<p align="justify">Comprueba que nosotros tenemos <b>tarifas más bajas</b> que los bancos e incluso
+										que otras páginas de préstamos en línea.</p>
+									</li>
+									<li>
+										<span class="icon major style3 fa-map-marker "></span>
+										<h3><b>Todo más sencillo</b></h3>
+										<p align="justify">										
+											&bullet; &nbsp;Recibelo <b>en menos de 30 minutos</b>.<br>
+											&bullet; &nbsp;Tienes hasta <b>30 días</b> para pagarlo.<br>					
+											&bullet; &nbsp;<b>No hay penalización</b> por pronto pago.<br>		
+											&bullet; &nbsp;Paga en cualquier <b>OXXO</b> o <b>banco</b> o tienda. <br>	
+										 </p>
+									</li>
+									<li>
+										<span class="icon major style5 fa-street-view"></span>
+										<h3><b>Pensamos en tí</b></h3>
+										<p class="justify"> <b>Queremos que alcances tu metas</b>, por eso te acompañamos durante todo el proceso donde <b>te regalaremos descuentos y promociones en tiendas</b>, restaurantes y cafeterías.</p>
+									</li>
+								</ul>
+								<footer class="major">
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Conoce todos los beneficios</a></li>
+									</ul>
+								</footer>
+							</section>
+
+						<!-- Second Section -->
+							<section id="second" class="main special">
+								<header class="major">
+									<h2>Ser cumplido te da beneficios</h2>
+									<p>En Kintos queremos que mejores tus finanzas personales, para eso
+									hemos creado una serie de recompensas que podrás disfrutar cada vez 
+									que subas de nivel u obtengas un logro en el camino.</p>
+								</header>
+								<ul class="statistics">
+									<li class="style1">
+										<strong><span class="icon fa-percent"></span>
+										</strong> Tasas de interés más y más bajas
+									</li>
+									<li class="style2">
+										<strong><span class="icon fa-money"></span>
+										</strong> Préstamos más grandes
+									</li>
+									<li class="style3">
+										<strong><span class="icon fa-gift"></span>
+										</strong> Recompensas en miles de comercios
+									</li>
+									<li class="style4">
+										<strong><span class="icon fa-rocket"></span>
+										</strong> Conviértete en el inversionista
+									</li>
+									<li class="style5">
+										<strong><span class="icon fa-user"></span>
+										</strong> Consigue la libertad financiera									
+									</li>
+								</ul>
+								<!--<p class="content">Ser mexicano te da muchos beneficios.</p>
+								<footer class="major">
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Learn More</a></li>
+									</ul>
+								</footer>-->
+							</section>
+
+
+						<!-- Get Started -->
+							<section id="cta" class="main special">
+								<header class="major">
+									<h2>¿Ya estás listo?</h2>
+									<p>No pierdas mas tiempo, consigue la libertad financiera ya mismo.</p>
+								</header>
+								<footer class="major">
+									<ul class="actions">
+										<li><a href="generic.html" class="button special">Registrarme</a></li>
+										<li><a href="generic.html" class="button">¿Dudas?</a></li>
+									</ul>
+								</footer>
+							</section>
+
 					</div>
-				</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<section>
+							<h2>¿Quieres formar parte de Kintos?</h2>
+							<p>Kintos es la siguiente generación en servicios financieros, si
+							tienes habilidades en desarrollo fullstack, data science o finanzas
+							tenemos un lugar para tí.</p>
+							<ul class="actions">
+								<li><a href="generic.html" class="button">Contáctanos</a></li>
+							</ul>
+						</section>
+						<section>
+							<h2>Contacto</h2>
+							<dl class="alt">
+								<dt>Ubicación</dt>
+								<dd> <span class="fa fa-heart"></span> Guadalajara &bull; Jalisco, 44500 &bull; México</dd>
+								<dt>Teléfono</dt>
+								<dd>(317) 10-1000 Ext. 0000</dd>
+								<dt>Correo</dt>
+								<dd><a href="#">hola@kintosapp.com</a></dd>
+							</dl>
+							<ul class="icons">								
+								<li><a href="#" class="icon fa-facebook alt"><span class="label">Facebook</span></a></li>
+							</ul>
+						</section>
+						<p class="copyright">&copy; Kintos SAPI de CV. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+					</footer>
+
 			</div>
-		</div>
-	</div>
-		<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/jquery.easing.1.3.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/jquery.waypoints.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/jquery.countTo.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/jquery.magnific-popup.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/magnific-popup-options.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/main.js') }}"></script>
-		
-		<!--
-	  	<script src="vendor/jquery/jquery.min.js"></script>
-		<script src="dist/js/jquery.easing.1.3.js"></script>
-	  	<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-		<script src="dist/js/jquery.waypoints.min.js"></script>
-		<script src="dist/js/jquery.countTo.js"></script>
-		<script src="dist/js/jquery.magnific-popup.min.js"></script>
-		<script src="dist/js/magnific-popup-options.js"></script>
-		<script src="dist/js/main.js"></script>
-		-->
-		
+
+		<!-- Scripts -->
+			<script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/jquery.scrollex.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/jquery.scrolly.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/skel.min.js') }}"></script>
+			<script src="{{ url_for('static', filename='assets/js/util.js') }}"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+
 	</body>
 </html>
