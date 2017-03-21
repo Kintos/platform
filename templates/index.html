@@ -23,13 +23,13 @@
 
 				<!-- Header -->
 					<header id="header" class="alt">
-						<span class="logo"><img src="images/logo.svg" alt="" /></span>
+						<span class="logo"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="" /></span>
 						<h1>Kintos</h1>
 						<p>Convierte tu <b>tarjeta de débito</b> en una de <b>crédito</b> desde tu <b>celular</b> <br />
 						con más beneficios que el <b>banco</b> y menos problemas.</p>						
 						<ul class="actions">
-                        		<li><a href="#intro" class="button special"><span class="fa fa-credit-card"></span> Comenzar ahora</a></li>
-								<li><a href="#" class="button"><span class="fa fa-login"></span>Entrar</a></li>
+                        		<li><a href="/signup" class="button special"><span class="fa fa-credit-card"></span> Comenzar ahora</a></li>
+								<li><a href="/login" class="button"><span class="fa fa-login"></span>Entrar</a></li>
 						</ul>
 					</header>
 
